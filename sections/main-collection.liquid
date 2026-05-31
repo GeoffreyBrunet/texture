@@ -1,0 +1,36 @@
+{%- comment -%} main-collection.liquid {%- endcomment -%}
+<section class="section">
+  <div class="wrap">
+    <div class="coll-head">
+      <h1 class="disp"><span class="squash">{{ collection.title | downcase }}</span></h1>
+      <p class="meta">{{ collection.products_count }}
+        {%- if collection.products_count == 1 %} cookie{% else %} cookies{% endif %} · retrait sur place</p>
+    </div>
+
+    {%- paginate collection.products by 24 -%}
+      <div class="pgrid">
+        {%- for product in collection.products -%}
+          {% render 'product-card', product: product %}
+        {%- else -%}
+          <p class="manifesto">aucun cookie pour le moment.</p>
+        {%- endfor -%}
+      </div>
+
+      {%- if paginate.pages > 1 -%}
+        <div class="tags" style="justify-content:center;margin-top:24px;">
+          {%- for part in paginate.parts -%}
+            {%- if part.is_link -%}
+              <a class="pill sm" href="{{ part.url }}">{{ part.title }}</a>
+            {%- else -%}
+              <span class="pill sm on">{{ part.title }}</span>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Collection", "settings": [] }
+{% endschema %}

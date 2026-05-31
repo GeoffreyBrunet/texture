@@ -1,0 +1,19 @@
+{
+  "general": {
+    "404": {
+      "title": "page introuvable",
+      "subtext": "cette page n'existe pas ou plus.",
+      "link": "retour à la boutique"
+    },
+    "search": {
+      "placeholder": "rechercher un cookie",
+      "no_results": "aucun résultat."
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "ajouter au panier",
+      "sold_out": "épuisé"
+    }
+  }
+}

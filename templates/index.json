@@ -1,0 +1,39 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "badge": "nouveau · pistaches",
+        "line1": "cookies",
+        "line2": "de spécialité."
+      }
+    },
+    "manifesto": {
+      "type": "manifesto",
+      "settings": {
+        "text": "bar à cookies de spécialité à limoges. une fabrication artisanale et exigeante : textures maîtrisées, parfums francs, ingrédients sélectionnés.",
+        "tag": "limoges · 87000",
+        "pill_label": "retrait sur place ↗"
+      }
+    },
+    "cookies": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "les cookies",
+        "limit": 8,
+        "layout": "grid"
+      }
+    },
+    "lieu": {
+      "type": "lieu-band",
+      "settings": {
+        "line1": "notre bar",
+        "line2": "à cookies",
+        "text": "une banquette en tubes, un sol clair, une lumière franche — un espace pensé pour la dégustation sur place.",
+        "btn_label": "découvrir le lieu",
+        "btn_link": "https://www.instagram.com/texture.cookies/"
+      }
+    }
+  },
+  "order": ["hero", "manifesto", "cookies", "lieu"]
+}

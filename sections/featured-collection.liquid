@@ -1,0 +1,38 @@
+{%- comment -%} featured-collection.liquid {%- endcomment -%}
+{%- assign coll = section.settings.collection -%}
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="disp"><span class="squash">{{ section.settings.title }}</span></h2>
+      {%- if coll != blank -%}<a class="more" href="{{ coll.url }}">tout voir →</a>{%- endif -%}
+    </div>
+    <div class="{% if section.settings.layout == 'grid' %}pgrid{% else %}shelf{% endif %}">
+      {%- if coll != blank -%}
+        {%- for product in coll.products limit: section.settings.limit -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for product in collections.all.products limit: section.settings.limit -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Rayon produits",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Titre", "default": "les cookies" },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "limit", "label": "Nombre de produits", "min": 2, "max": 12, "step": 1, "default": 8 },
+    { "type": "select", "id": "layout", "label": "Disposition", "default": "shelf",
+      "options": [
+        { "value": "shelf", "label": "Carrousel horizontal" },
+        { "value": "grid", "label": "Grille" }
+      ] }
+  ],
+  "presets": [{ "name": "Rayon produits" }]
+}
+{% endschema %}

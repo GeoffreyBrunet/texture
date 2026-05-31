@@ -1,0 +1,25 @@
+{%- comment -%} manifesto.liquid {%- endcomment -%}
+<section class="section">
+  <div class="wrap">
+    <p class="manifesto">{{ section.settings.text }}</p>
+    <div class="tags mt14">
+      {%- if section.settings.tag != blank -%}<span class="dymo">{{ section.settings.tag }}</span>{%- endif -%}
+      {%- if section.settings.pill_label != blank -%}
+        <a class="pill sm" href="{{ section.settings.pill_link }}">{{ section.settings.pill_label }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Manifeste",
+  "settings": [
+    { "type": "textarea", "id": "text", "label": "Texte", "default": "bar à cookies de spécialité à limoges. une fabrication artisanale et exigeante : textures maîtrisées, parfums francs, ingrédients sélectionnés." },
+    { "type": "text", "id": "tag", "label": "Étiquette dymo", "default": "limoges · 87000" },
+    { "type": "text", "id": "pill_label", "label": "Lien — libellé", "default": "retrait sur place ↗" },
+    { "type": "url", "id": "pill_link", "label": "Lien — url" }
+  ],
+  "presets": [{ "name": "Manifeste" }]
+}
+{% endschema %}

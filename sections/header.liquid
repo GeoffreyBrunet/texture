@@ -1,0 +1,60 @@
+{%- comment -%} header.liquid {%- endcomment -%}
+<header class="site-header">
+  <div class="bar">
+
+    <div class="bar-left">
+      <button class="iconbtn" data-menu-open aria-label="ouvrir le menu">
+        <span class="burger"><i></i><i></i><i></i></span>
+      </button>
+    </div>
+
+    <a href="{{ routes.root_url }}" class="logo" aria-label="{{ shop.name }} accueil">
+      <b style="font-size:28px;">texture</b>
+      <i style="font-size:8px;margin-top:1px;">cookies</i>
+    </a>
+
+    <div class="bar-right">
+      <nav class="nav-desktop">
+        {%- for link in section.settings.menu.links -%}
+          <a href="{{ link.url }}">{{ link.title | downcase }}</a>
+        {%- endfor -%}
+      </nav>
+      <a href="{{ routes.cart_url }}" class="iconbtn cart-link" data-cart-open aria-label="panier">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="20" r="1.4"></circle><circle cx="18" cy="20" r="1.4"></circle>
+          <path d="M2.5 3h2l2.2 12.3a1.5 1.5 0 0 0 1.5 1.2h8.5a1.5 1.5 0 0 0 1.5-1.2L21 7H6"></path>
+        </svg>
+        <span class="cart-count" data-cart-count {% if cart.item_count == 0 %}hidden{% endif %}>{{ cart.item_count }}</span>
+      </a>
+    </div>
+
+  </div>
+</header>
+
+{%- comment -%} slide menu (mobile) {%- endcomment -%}
+<div class="menu-scrim" data-menu-scrim></div>
+<aside class="menu-panel" data-menu-panel aria-hidden="true">
+  <div class="flex between">
+    <a href="{{ routes.root_url }}" class="logo"><b style="font-size:26px;">texture</b><i style="font-size:8px;">cookies</i></a>
+    <button class="closebtn" data-menu-close aria-label="fermer">✕</button>
+  </div>
+  <nav>
+    {%- for link in section.settings.menu.links -%}
+      <a href="{{ link.url }}">{{ link.title | downcase }}</a>
+    {%- endfor -%}
+  </nav>
+  <div class="menu-legal">
+    {%- if shop.terms_of_service != blank %}<a href="/policies/terms-of-service">cgv</a>{% endif -%}
+    {%- if shop.privacy_policy != blank %}<a href="/policies/privacy-policy">confidentialité</a>{% endif -%}
+    {%- if shop.refund_policy != blank %}<a href="/policies/refund-policy">remboursement</a>{% endif -%}
+  </div>
+</aside>
+
+{% schema %}
+{
+  "name": "En-tête",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menu de navigation", "default": "main-menu" }
+  ]
+}
+{% endschema %}

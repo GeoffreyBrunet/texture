@@ -1,0 +1,54 @@
+{%- comment -%} footer.liquid {%- endcomment -%}
+<footer class="site-footer">
+  {%- if section.settings.show_newsletter -%}
+  <div class="news">
+<div class="wrap">
+      <div class="disp">
+        <span class="squash">{{ section.settings.news_line1 }}</span><br>
+        <span class="squash">{{ section.settings.news_line2 }}</span>
+      </div>
+      {%- form 'customer', class: 'news-form' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div class="flex gap8 mt14" style="max-width:440px;">
+          <input type="email" name="contact[email]" placeholder="votre email" required>
+          <button type="submit" class="btn btn-dark">s'inscrire</button>
+        </div>
+        {%- if form.posted_successfully? -%}<p style="margin-top:10px;font:500 13px/1 var(--ui);">merci, c'est noté.</p>{%- endif -%}
+      {%- endform -%}
+    </div>
+  </div>
+  {%- endif -%}
+
+  <div class="foot-main">
+    <div class="wrap">
+      <a href="{{ routes.root_url }}" class="logo light"><b style="font-size:40px;">texture</b><i style="font-size:9px;">cookies</i></a>
+
+      <div class="tags mt18">
+        <span class="dymo">{{ section.settings.city }}</span>
+        <span class="dymo">{{ section.settings.hours }}</span>
+      </div>
+
+      <div class="foot-cols">
+        <a href="mailto:choncote.coffee@gmail.com">contact</a>
+        <a href="/policies/privacy-policy">confidentialité</a>
+      </div>
+
+      <hr class="hr" style="background:rgba(255,255,255,.14);margin:22px 0 14px;">
+      <span class="foot-legal">© {{ 'now' | date: '%Y' }} {{ shop.name }} — tous droits réservés</span>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Pied de page",
+  "settings": [
+    { "type": "checkbox", "id": "show_newsletter", "label": "Afficher la bande newsletter", "default": true },
+    { "type": "text", "id": "news_line1", "label": "Newsletter — ligne 1", "default": "les nouveautés" },
+    { "type": "text", "id": "news_line2", "label": "Newsletter — ligne 2", "default": "en avant-première" },
+    { "type": "link_list", "id": "menu", "label": "Menu du pied de page", "default": "footer" },
+    { "type": "text", "id": "city", "label": "Ville · code postal", "default": "limoges · 87000" },
+    { "type": "text", "id": "hours", "label": "Horaires", "default": "mar–dim · 10–19h" }
+  ]
+}
+{% endschema %}

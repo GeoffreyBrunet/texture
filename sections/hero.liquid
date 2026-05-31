@@ -1,0 +1,47 @@
+{%- comment -%} hero.liquid {%- endcomment -%}
+{%- assign fp = section.settings.product -%}
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-inner">
+
+{%- if section.settings.badge != blank -%}
+        <span class="dymo hero-badge">{{ section.settings.badge }}</span>
+      {%- endif -%}
+
+      <a class="hero-art" href="{% if fp != blank %}{{ fp.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}">
+        {%- if fp != blank -%}
+          {% render 'product-media', product: fp %}
+        {%- else -%}
+          <div class="pmedia"><div class="disc-wrap"><div class="disc" style="background:radial-gradient(60% 55% at 38% 32%,#a8c466,#7a9a3e 72%,#3a4c18);"><span class="gloss"></span></div></div></div>
+        {%- endif -%}
+      </a>
+
+      <div class="hero-copy">
+        <div class="flex between" style="align-items:flex-end;gap:12px;">
+          <div class="disp">
+            <span class="squash">{{ section.settings.line1 }}</span><br>
+            <span class="squash">{{ section.settings.line2 }}</span>
+          </div>
+          {%- if section.settings.cta_label != blank -%}
+            <a class="btn btn-acc btn-sm" href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}" style="flex:none;">{{ section.settings.cta_label }}</a>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Cookie mis en avant (visuel)" },
+    { "type": "text", "id": "badge", "label": "Étiquette", "default": "nouveau · pistaches" },
+    { "type": "text", "id": "line1", "label": "Titre — ligne 1", "default": "cookies" },
+    { "type": "text", "id": "line2", "label": "Titre — ligne 2", "default": "de spécialité." },
+    { "type": "text", "id": "cta_label", "label": "Bouton — libellé", "default": "voir la carte" },
+    { "type": "url", "id": "cta_link", "label": "Bouton — lien" }
+  ],
+  "presets": [{ "name": "Hero" }]
+}
+{% endschema %}

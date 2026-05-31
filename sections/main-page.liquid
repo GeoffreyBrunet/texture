@@ -1,0 +1,19 @@
+{%- comment -%} main-page.liquid {%- endcomment -%}
+<section class="section">
+  <div class="wrap">
+    <div class="page">
+      <span class="seclabel acc">{{ section.settings.eyebrow }}</span>
+      <h1 class="disp"><span class="squash">{{ page.title | downcase }}</span></h1>
+      <div class="rte">{{ page.content }}</div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "texture" }
+  ]
+}
+{% endschema %}

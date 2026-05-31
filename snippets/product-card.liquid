@@ -1,0 +1,20 @@
+{%- comment -%}
+  product-card.liquid — params: product
+{%- endcomment -%}
+<article class="pcard">
+  <a class="media-link" href="{{ product.url }}">
+    {%- render 'product-media', product: product -%}
+    <span class="dymo">{{ product.price | money }}</span>
+    {%- unless product.available -%}
+      <div class="sold-overlay"><span class="dymo">épuisé</span></div>
+    {%- endunless -%}
+  </a>
+  <div class="body">
+    <a class="name" href="{{ product.url }}">{{ product.title | downcase }}</a>
+    {%- form 'product', product, class: 'js-add-form' -%}
+      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+      <button type="submit" class="add-btn" aria-label="ajouter {{ product.title | escape }} au panier"
+        {% unless product.available %}disabled{% endunless %}>+</button>
+    {%- endform -%}
+  </div>
+</article>
