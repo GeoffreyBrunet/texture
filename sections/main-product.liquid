@@ -23,7 +23,7 @@
 
           {%- unless product.has_only_default_variant -%}
             <div style="margin-top:18px;">
-              <span class="seclabel acc">format</span>
+              <span class="seclabel acc">Format</span>
               <div class="opt-row" data-variant-radios>
                 {%- for variant in product.variants -%}
                   <label class="pill {% if variant.id == current_variant.id %}on{% endif %}{% unless variant.available %} unavailable{% endunless %}">
@@ -41,37 +41,37 @@
           {%- endunless -%}
 
           <div style="margin-top:18px;">
-            <span class="seclabel">quantité</span>
+            <span class="seclabel">Quantité</span>
             <div class="stepper" data-stepper style="margin-top:10px;">
-              <button type="button" class="minus" aria-label="moins">–</button>
+              <button type="button" class="minus" aria-label="moins"><svg width="12" height="2" viewBox="0 0 12 2" fill="currentColor" aria-hidden="true"><rect width="12" height="2" rx="1"/></svg></button>
               <span class="q" data-qty>1</span>
               <input type="hidden" name="quantity" value="1" data-qty-input>
-              <button type="button" class="plus" aria-label="plus">+</button>
+              <button type="button" class="plus" aria-label="plus"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
             </div>
           </div>
 
           {%- assign allergenes = product.metafields.custom.allergenes.value -%}
           <div class="card" style="padding:14px;margin-top:18px;">
             <div class="flex between">
-              <span class="seclabel">allergènes</span>
+              <span class="seclabel">Allergènes</span>
               <span style="font:600 9px/1 ui-monospace,monospace;color:var(--mono);">règl. inco 1169/2011</span>
             </div>
             <div class="allergens">
               {%- if allergenes != blank -%}
                 {%- for a in allergenes -%}<span class="allergen">{{ a | downcase }}</span>{%- endfor -%}
               {%- else -%}
-                <span style="font:400 12px/1 var(--ui);color:var(--mono);">aucun allergène majeur déclaré.</span>
+                <span style="font:400 12px/1 var(--ui);color:var(--mono);">Aucun allergène majeur déclaré.</span>
               {%- endif -%}
             </div>
           </div>
 
           <div class="buybar">
             <div class="total">
-              <span class="lbl">total</span>
+              <span class="lbl">Total</span>
               <span class="amt" data-total>{{ current_variant.price | money }}</span>
             </div>
             <button type="submit" class="btn btn-acc btn-block" style="flex:1;" {% unless product.available %}disabled{% endunless %}>
-              {% if product.available %}ajouter au panier{% else %}épuisé{% endif %}
+              {% if product.available %}Ajouter au panier{% else %}Épuisé{% endif %}
             </button>
           </div>
 
@@ -83,7 +83,7 @@
     {%- assign reco = collections[section.settings.reco_collection] | default: product.collections.first -%}
     {%- if reco != blank and reco.products_count > 1 -%}
       <div class="section" style="padding-top:30px;">
-        <div class="section-head"><h2 class="disp" style="font-size:20px;"><span class="squash">souvent pris avec</span></h2></div>
+        <div class="section-head"><h2 class="disp" style="font-size:20px;"><span class="squash">Souvent pris avec</span></h2></div>
         <div class="shelf">
           {%- assign shown = 0 -%}
           {%- for p in reco.products -%}

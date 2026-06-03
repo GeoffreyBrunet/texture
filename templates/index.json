@@ -11,9 +11,9 @@
     "manifesto": {
       "type": "manifesto",
       "settings": {
-        "text": "bar à cookies de spécialité à limoges. une fabrication artisanale et exigeante : textures maîtrisées, parfums francs, ingrédients sélectionnés.",
-        "tag": "limoges · 87000",
-        "pill_label": "retrait sur place ↗"
+        "text": "Bar à cookies de spécialité à Limoges. Une fabrication artisanale et exigeante : textures maîtrisées, parfums francs, ingrédients sélectionnés.",
+        "tag": "Limoges · 87000",
+        "pill_label": "Retrait ou livraison ↗"
       }
     },
     "cookies": {
@@ -27,10 +27,10 @@
     "lieu": {
       "type": "lieu-band",
       "settings": {
-        "line1": "notre bar",
-        "line2": "à cookies",
-        "text": "une banquette en tubes, un sol clair, une lumière franche — un espace pensé pour la dégustation sur place.",
-        "btn_label": "découvrir le lieu",
+        "line1": "Notre bar",
+        "line2": "À cookies",
+        "text": "texture, c'est l'obsession d'un seul produit — le cookie artisanal, dans un espace fait pour le goûter.",
+        "btn_label": "Découvrir le lieu",
         "btn_link": "https://www.instagram.com/texture.cookies/"
       }
     }

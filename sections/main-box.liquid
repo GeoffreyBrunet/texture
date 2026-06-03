@@ -1,0 +1,173 @@
+{%- comment -%} main-box.liquid — sélecteur boîte de 6 cookies {%- endcomment -%}
+{%- assign box_variant = product.selected_or_first_available_variant -%}
+{%- assign coll = section.settings.collection -%}
+{%- assign box_size = 6 -%}
+
+<section class="section">
+  <div class="wrap" style="max-width:860px;">
+
+    <div class="flex between" style="align-items:flex-end;margin-bottom:8px;gap:12px;flex-wrap:wrap;">
+      <h1 class="disp" style="font-size:clamp(24px,5vw,38px);margin:0;">
+        <span class="squash">{{ product.title | downcase }}</span>
+      </h1>
+      <span class="dymo lg">{{ box_variant.price | money }}</span>
+    </div>
+
+    {%- if product.description != blank -%}
+      <p style="font:400 14px/1.6 var(--ui);color:var(--ink-soft);margin:0 0 24px;">{{ product.description | strip_html }}</p>
+    {%- endif -%}
+
+    <div style="margin-bottom:28px;">
+      <div class="flex between" style="margin-bottom:10px;">
+        <span style="font:500 13px/1 var(--ui);color:var(--ink-soft);">Cookies sélectionnés</span>
+        <span class="dymo" id="box-count">0 / {{ box_size }}</span>
+      </div>
+      <div style="height:5px;background:var(--line-2);border-radius:999px;overflow:hidden;">
+        <div id="box-bar" style="height:100%;width:0%;background:var(--accent);border-radius:999px;transition:width .25s ease;"></div>
+      </div>
+    </div>
+
+    {%- if coll != blank and coll.products_count > 0 -%}
+      <div class="pgrid" id="box-grid">
+        {%- for p in coll.products -%}
+          {%- if p.available -%}
+          <div class="pcard box-item" data-title="{{ p.title | escape }}">
+            <div style="pointer-events:none;">
+              {%- render 'product-media', product: p -%}
+            </div>
+            <div class="body">
+              <span class="name">{{ p.title | downcase }}</span>
+              <div class="flex between" style="align-items:center;margin-top:4px;">
+                <button type="button" class="box-minus" aria-label="retirer"
+                  style="width:28px;height:28px;border-radius:999px;border:1.5px solid var(--line);background:rgba(255,255,255,.6);color:var(--ink);cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;transition:.12s;"
+                  disabled>
+                  <svg width="10" height="2" viewBox="0 0 10 2" fill="currentColor" aria-hidden="true"><rect width="10" height="2" rx="1"/></svg>
+                </button>
+                <span class="box-qty" style="font:600 16px/1 var(--ui);min-width:20px;text-align:center;">0</span>
+                <button type="button" class="box-plus" aria-label="ajouter"
+                  style="width:28px;height:28px;border-radius:999px;border:none;background:var(--accent);color:#fff;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(255,90,31,.35);transition:.12s;">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <p style="font:400 15px/1.5 var(--ui);color:var(--mono);">Sélectionnez une collection dans le personnalisateur.</p>
+    {%- endif -%}
+
+    <div class="buybar" style="margin-top:32px;">
+      <div class="total">
+        <span class="lbl">Total</span>
+        <span class="amt">{{ box_variant.price | money }}</span>
+      </div>
+      <button type="button" id="box-submit" class="btn btn-acc btn-block" style="flex:1;" disabled>
+        Choisissez {{ box_size }} cookies
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<script>
+(function () {
+  var BOX_SIZE = {{ box_size }};
+  var VARIANT_ID = {{ box_variant.id }};
+  var total = 0;
+  var counts = {};
+
+  var countEl = document.getElementById('box-count');
+  var barEl   = document.getElementById('box-bar');
+  var submitBtn = document.getElementById('box-submit');
+
+  function update() {
+    countEl.textContent = total + ' / ' + BOX_SIZE;
+    barEl.style.width = Math.min(total / BOX_SIZE * 100, 100) + '%';
+
+    var done = total === BOX_SIZE;
+    submitBtn.disabled = !done;
+    submitBtn.textContent = done ? 'Ajouter au panier' : 'Choisissez ' + BOX_SIZE + ' cookies (' + (BOX_SIZE - total) + ' restants)';
+
+    document.querySelectorAll('.box-item').forEach(function (item) {
+      var title = item.dataset.title;
+      var qty   = counts[title] || 0;
+      var plus  = item.querySelector('.box-plus');
+      var minus = item.querySelector('.box-minus');
+      item.querySelector('.box-qty').textContent = qty;
+      minus.disabled = qty === 0;
+      plus.disabled  = total >= BOX_SIZE;
+      plus.style.opacity  = total >= BOX_SIZE ? '.35' : '1';
+      plus.style.cursor   = total >= BOX_SIZE ? 'not-allowed' : 'pointer';
+    });
+  }
+
+  document.querySelectorAll('.box-item').forEach(function (item) {
+    var title = item.dataset.title;
+    counts[title] = 0;
+
+    item.querySelector('.box-plus').addEventListener('click', function () {
+      if (total >= BOX_SIZE) return;
+      counts[title]++;
+      total++;
+      update();
+    });
+
+    item.querySelector('.box-minus').addEventListener('click', function () {
+      if (counts[title] === 0) return;
+      counts[title]--;
+      total--;
+      update();
+    });
+  });
+
+  submitBtn.addEventListener('click', function () {
+    if (total !== BOX_SIZE) return;
+    var btn = submitBtn;
+    btn.disabled = true;
+    btn.textContent = '…';
+
+    var formData = new FormData();
+    formData.append('id', VARIANT_ID);
+    formData.append('quantity', 1);
+
+    Object.keys(counts).forEach(function (title) {
+      if (counts[title] > 0) {
+        formData.append('properties[' + title + ']', counts[title]);
+      }
+    });
+
+    fetch('/cart/add.js', {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(function (r) { return r.json(); })
+    .then(function () {
+      btn.textContent = '✓ Ajouté !';
+      if (window.__textureOpenCart) window.__textureOpenCart();
+      else document.querySelector('[data-cart-open]') && document.querySelector('[data-cart-open]').click();
+      setTimeout(function () {
+        btn.disabled = false;
+        update();
+      }, 1400);
+    })
+    .catch(function () {
+      btn.disabled = false;
+      update();
+    });
+  });
+
+  update();
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Boîte de 6",
+  "settings": [
+    { "type": "collection", "id": "collection", "label": "Collection de cookies à afficher" }
+  ]
+}
+{% endschema %}

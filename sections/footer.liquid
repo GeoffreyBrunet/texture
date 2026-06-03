@@ -11,9 +11,9 @@
         <input type="hidden" name="contact[tags]" value="newsletter">
         <div class="flex gap8 mt14" style="max-width:440px;">
           <input type="email" name="contact[email]" placeholder="votre email" required>
-          <button type="submit" class="btn btn-dark">s'inscrire</button>
+          <button type="submit" class="btn btn-dark">S'inscrire</button>
         </div>
-        {%- if form.posted_successfully? -%}<p style="margin-top:10px;font:500 13px/1 var(--ui);">merci, c'est noté.</p>{%- endif -%}
+        {%- if form.posted_successfully? -%}<p style="margin-top:10px;font:500 13px/1 var(--ui);">Merci, c'est noté.</p>{%- endif -%}
       {%- endform -%}
     </div>
   </div>
@@ -29,12 +29,12 @@
       </div>
 
       <div class="foot-cols">
-        <a href="mailto:choncote.coffee@gmail.com">contact</a>
-        <a href="/policies/privacy-policy">confidentialité</a>
+        <a href="mailto:choncote.coffee@gmail.com">Contact</a>
+        <a href="/policies/privacy-policy">Confidentialité</a>
       </div>
 
       <hr class="hr" style="background:rgba(255,255,255,.14);margin:22px 0 14px;">
-      <span class="foot-legal">© {{ 'now' | date: '%Y' }} {{ shop.name }} — tous droits réservés</span>
+      <span class="foot-legal">© {{ 'now' | date: '%Y' }} {{ shop.name }} — Tous droits réservés</span>
     </div>
   </div>
 </footer>
@@ -44,8 +44,8 @@
   "name": "Pied de page",
   "settings": [
     { "type": "checkbox", "id": "show_newsletter", "label": "Afficher la bande newsletter", "default": true },
-    { "type": "text", "id": "news_line1", "label": "Newsletter — ligne 1", "default": "les nouveautés" },
-    { "type": "text", "id": "news_line2", "label": "Newsletter — ligne 2", "default": "en avant-première" },
+    { "type": "text", "id": "news_line1", "label": "Newsletter — ligne 1", "default": "Les nouveautés" },
+    { "type": "text", "id": "news_line2", "label": "Newsletter — ligne 2", "default": "En avant-première" },
     { "type": "link_list", "id": "menu", "label": "Menu du pied de page", "default": "footer" },
     { "type": "text", "id": "city", "label": "Ville · code postal", "default": "limoges · 87000" },
     { "type": "text", "id": "hours", "label": "Horaires", "default": "mar–dim · 10–19h" }

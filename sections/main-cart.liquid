@@ -1,14 +1,14 @@
 {%- comment -%} main-cart.liquid — page panier (/cart) {%- endcomment -%}
 <section class="section">
   <div class="wrap" style="max-width:760px;">
-    <h1 class="disp" style="font-size:clamp(28px,6vw,40px);"><span class="squash">panier</span>
+    <h1 class="disp" style="font-size:clamp(28px,6vw,40px);"><span class="squash">Panier</span>
       {%- if cart.item_count > 0 %} <span class="spark">{{ cart.item_count }}</span>{% endif -%}
     </h1>
 
     {%- if cart.item_count == 0 -%}
       <div class="cart-empty" style="min-height:280px;">
-<p style="font:500 15px/1.4 var(--ui);color:var(--ink-soft);text-transform:lowercase;margin:0;">votre panier est vide.</p>
-        <a class="btn btn-acc" href="{{ routes.all_products_collection_url }}">voir la carte</a>
+<p style="font:500 15px/1.4 var(--ui);color:var(--ink-soft);margin:0;">Votre panier est vide.</p>
+        <a class="btn btn-acc" href="{{ routes.all_products_collection_url }}">Voir la carte</a>
       </div>
     {%- else -%}
       <form action="{{ routes.cart_url }}" method="post" id="cart-form" class="mt18">
@@ -25,9 +25,9 @@
               {%- endunless -%}
               <div class="flex between" style="margin-top:10px;">
                 <div class="stepper" data-cart-stepper data-key="{{ item.key }}">
-                  <button type="button" class="minus" aria-label="moins">–</button>
+                  <button type="button" class="minus" aria-label="moins"><svg width="12" height="2" viewBox="0 0 12 2" fill="currentColor" aria-hidden="true"><rect width="12" height="2" rx="1"/></svg></button>
                   <span class="q">{{ item.quantity }}</span>
-                  <button type="button" class="plus" aria-label="plus">+</button>
+                  <button type="button" class="plus" aria-label="plus"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
                 </div>
                 <a class="remove" href="{{ item.url_to_remove }}">retirer</a>
               </div>
@@ -37,14 +37,14 @@
 
         <div class="card note-band" style="margin-top:18px;">
           <span style="font-size:18px;">🍪</span>
-          <span style="font:400 12px/1.3 var(--ui);color:var(--ink-soft);text-transform:lowercase;">retrait sur place · prêt en ~15 min</span>
+          <span style="font:400 12px/1.3 var(--ui);color:var(--ink-soft);">Retrait à Limoges ou livraison 24–48h · 6 € (gratuit dès 50 €)</span>
         </div>
 
         <div class="flex between" style="margin:20px 0 14px;">
-          <span class="seclabel acc">total ttc</span>
+          <span class="seclabel acc">Total TTC</span>
           <span class="dymo lg">{{ cart.total_price | money }}</span>
         </div>
-        <button type="submit" name="checkout" class="btn btn-acc btn-block">commander</button>
+        <button type="submit" name="checkout" class="btn btn-acc btn-block">Commander</button>
       </form>
     {%- endif -%}
   </div>

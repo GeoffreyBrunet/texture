@@ -25,6 +25,7 @@
   const drawer = $("[data-cart-drawer]");
   const drawerScrim = $("[data-cart-scrim]");
   const openCart = () => { drawer.classList.add("open"); drawerScrim.classList.add("open"); drawer.setAttribute("aria-hidden", "false"); refreshCart(); };
+  window.__textureOpenCart = openCart;
   const closeCart = () => { drawer.classList.remove("open"); drawerScrim.classList.remove("open"); drawer.setAttribute("aria-hidden", "true"); };
   $$("[data-cart-open]").forEach((b) => b.addEventListener("click", (e) => { e.preventDefault(); openCart(); }));
   $$("[data-cart-close]").forEach((b) => b.addEventListener("click", closeCart));
@@ -49,9 +50,9 @@
           ${variant}
           <div class="flex between" style="margin-top:10px;">
             <div class="stepper" data-drawer-stepper data-key="${item.key}">
-              <button type="button" class="minus" aria-label="moins">–</button>
+              <button type="button" class="minus" aria-label="moins"><svg width="12" height="2" viewBox="0 0 12 2" fill="currentColor" aria-hidden="true"><rect width="12" height="2" rx="1"/></svg></button>
               <span class="q">${item.quantity}</span>
-              <button type="button" class="plus" aria-label="plus">+</button>
+              <button type="button" class="plus" aria-label="plus"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
             </div>
             <button class="remove" data-remove="${item.key}">retirer</button>
           </div>
@@ -111,13 +112,15 @@
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const btn = form.querySelector('[type="submit"]');
-      const original = btn ? btn.textContent : "";
-      if (btn) { btn.disabled = true; btn.textContent = "…"; }
+      const original = btn ? btn.innerHTML : "";
+      const svgDots = `<svg width="16" height="4" viewBox="0 0 16 4" fill="currentColor" aria-hidden="true"><circle cx="2" cy="2" r="1.5"/><circle cx="8" cy="2" r="1.5"/><circle cx="14" cy="2" r="1.5"/></svg>`;
+      const svgCheck = `<svg width="14" height="11" viewBox="0 0 14 11" fill="none" aria-hidden="true"><path d="M1 5l4 4 8-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+      if (btn) { btn.disabled = true; btn.innerHTML = svgDots; }
       fetch("/cart/add.js", { method: "POST", body: new FormData(form), headers: { "Accept": "application/json" } })
         .then((r) => r.json())
-        .then(() => { if (btn) btn.textContent = "✓"; refreshCart(); openCart(); })
-        .catch(() => { if (btn) { btn.disabled = false; btn.textContent = original; } })
-        .finally(() => { if (btn) setTimeout(() => { btn.disabled = false; btn.textContent = original; }, 900); });
+        .then(() => { if (btn) btn.innerHTML = svgCheck; refreshCart(); openCart(); })
+        .catch(() => { if (btn) { btn.disabled = false; btn.innerHTML = original; } })
+        .finally(() => { if (btn) setTimeout(() => { btn.disabled = false; btn.innerHTML = original; }, 900); });
     });
   });
 
